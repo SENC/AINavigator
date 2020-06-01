@@ -69,7 +69,7 @@ class AiAgent():
         self.qnetwork_local.eval()
         
         with torch.no_grad():
-            action_values = self.local_qnetwork_local(state)
+            action_values = self.qnetwork_local(state)
         self.qnetwork_local.train()
         
         #Epsilon greedy policy to select 'action'
