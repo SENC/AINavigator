@@ -73,7 +73,7 @@ class AiAgent():
         self.qnetwork_local.train()
         
         #Epsilon greedy policy to select 'action'
-        if random.random > epsl :
+        if random.random() > epsl :
             return np.argmax(action_values.cpu().data.numpy())
         else:
             return random.choice(np.arange(self.action_size))
