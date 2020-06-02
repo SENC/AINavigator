@@ -1,10 +1,9 @@
-# AI Agent File
-# Initialize AI agent , properties and define functions like step, action, learn
 #Reference Libraries
 
 import numpy as np
 import random
 from collections import namedtuple, deque
+
 
 from nn_model import QDeepNetwork
 
@@ -19,11 +18,13 @@ BUFFER_SIZE = int (1e5)
 #Batch Size
 BATCH_SIZE = 64 
 #discounted reward rate 
-GAMMA = 0.99
+GAMMA = 0.997
 TAU = 1e-3
 LR = 5e-4
+#LR =0.0005
 #How often to update the network
-UPDATE_EVERY = 10 
+UPDATE_EVERY = 10
+
 
 #Device CPU OR GPU
 
@@ -42,8 +43,8 @@ class AiAgent():
 
         
         #Q network
-        self.qnetwork_local = QDeepNetwork(state_size,action_size,seed).todevice(device)
-        self.qnetwork_target = QDeepNetwork(state_size,action_size,seed).todevice(device)
+        self.qnetwork_local = QDeepNetwork(state_size,action_size,seed).to(device)
+        self.qnetwork_target = QDeepNetwork(state_size,action_size,seed).to(device)
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(),lr=LR)
         
         #Replay memory
@@ -63,7 +64,7 @@ class AiAgent():
                 experiences = self.memory.sample()
                 self.learn(experiences, GAMMA)
                 
-    def act(self,state, epsl=0.)
+    def act(self,state, epsl=0.):
     
         state = torch.from_numpy(state).float().unsqueeze(0).to(device)
         self.qnetwork_local.eval()
@@ -104,8 +105,8 @@ class AiAgent():
     # target-model => weights to copy to
     # tau => interpolation 
     def soft_update(self, local_model, target_model, tau):
-         """Soft update model parameters.
-        θ_target = τ*θ_local + (1 - τ)*θ_target
+        """Soft update model parameters.
+            θ_target = τ*θ_local + (1 - τ)*θ_target
         """
         for target_param, local_param in zip(target_model.parameters(),local_model.parameters()):
             target_param.data.copy_(tau*local_param.data + (1.0-tau)*target_param.data)     
