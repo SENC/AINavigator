@@ -70,7 +70,7 @@ print('States have length:', state_size)
 # 
 # Note that **in this coding environment, you will not be able to watch the agent while it is training**, and you should set `train_mode=True` to restart the environment.
 
-# In[5]:
+# In[6]:
 
 
 env_info = env.reset(train_mode=True)[brain_name] # reset the environment
@@ -91,35 +91,18 @@ while True:
 print("Score: {}".format(score))
 
 
-# In[6]:
-
-
-#DeepQLearning 
-from cnn_model import QDeepNetwork
-from ai_agent import AiAgent
-
-
-# In[ ]:
-
-
-firstAI = AiAgent(state_size=37,action_size=4,seed=17)
-
-#num_episodes=2000
-eps_start=1.0
-eps_end=0.01
-eps_decay=0.995
-
-
-# In[ ]:
-
-
-#Test to create the instance of AiAgent
-firstAI = AiAgent(state_size=37,action_size=4,seed=1)
-
-
 # In[7]:
 
 
+#DeepQLearning 
+from nn_model import QDeepNetwork
+from agent import AiAgent
+
+
+# In[17]:
+
+
+#Reference Libraries
 import numpy as np
 from collections import deque
 import matplotlib.pyplot as plt
@@ -129,11 +112,18 @@ import random
 import torch
 
 
-# In[8]:
+# In[9]:
+
+
+#Test to create the instance of AiAgent
+firstAI = AiAgent(state_size=37,action_size=4,seed=1)
+
+
+# In[18]:
 
 
 #Train the Agent
-
+#Function dqn helps to calculate Agent's score when it get interacted with the Environment
 def dqn(firstAI,num_episodes=3000, max_t=1000, eps_start=0.9999, eps_end=0.05, eps_decay=0.995):
     """Deep Q-Learning.
     
@@ -166,9 +156,9 @@ def dqn(firstAI,num_episodes=3000, max_t=1000, eps_start=0.9999, eps_end=0.05, e
             env_info = env.step(action)[brain_name]
             next_state = env_info.vector_observations[0]   # get the next state
             reward = env_info.rewards[0]                   # get the reward
-            done = env_info.local_done[0]                  # see if episode has finished
-            score += reward                                # update the score
+            done = env_info.local_done[0]                  # see if episode has finished            
             state = next_state                             # roll over the state to next time step
+            score += reward                                # update the score
             if done:                                       # exit loop if episode finished
                 break
             scores_window.append(score)       # save most recent score
@@ -190,7 +180,7 @@ def dqn(firstAI,num_episodes=3000, max_t=1000, eps_start=0.9999, eps_end=0.05, e
 
 
 
-# In[9]:
+# In[19]:
 
 
 #v3  Updated Network model
@@ -224,7 +214,7 @@ scores = dqn(firstAI1)
 scores = dqn()
 
 
-# In[ ]:
+# In[20]:
 
 
 # plot the scores
@@ -236,35 +226,12 @@ plt.xlabel('Episode #')
 plt.show()
 
 
-# In[ ]:
-
-
-#Trained AI Agent
-
-env_info = env.reset(train_mode=False)[brain_name] # reset the environment
-state = env_info.vector_observations[0]            # get the current state
-score = 0                                          # initialize the score
-while True:
-    #action = np.random.randint(action_size)        # select an action
-    action = firstAI.act(state)
-    env_info = env.step(action)[brain_name]        # send the action to the environment
-    next_state = env_info.vector_observations[0]   # get the next state
-    reward = env_info.rewards[0]                   # get the reward
-    done = env_info.local_done[0]                  # see if episode has finished
-    score += reward                                # update the score
-    state = next_state                             # roll over the state to next time step
-    if done:                                       # exit loop if episode finished
-        break
-    
-print("Score: {}".format(score))
-
-
-# In[ ]:
+# In[21]:
 
 
 #Watch the train Agent perfromance
 # load the weights from file
-firstAI.qnetwork_local.load_state_dict(torch.load('checkpointai.pth'))
+firstAI.qnetwork_local.load_state_dict(torch.load('checkpointaiv3.pth'))
 
 
             
@@ -272,7 +239,7 @@ firstAI.qnetwork_local.load_state_dict(torch.load('checkpointai.pth'))
 
 # When finished, you can close the environment.
 
-# In[ ]:
+# In[12]:
 
 
 env.close()
