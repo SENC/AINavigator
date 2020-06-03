@@ -123,7 +123,7 @@ import torch
 firstAI = AiAgent(state_size=37,action_size=4,seed=17)
 
 
-# In[32]:
+# In[44]:
 
 
 #Train the Agent
@@ -177,13 +177,80 @@ def dqn(ai_agent,num_episodes=1000, max_t=1000, eps_start=0.78, eps_end=0.0025, 
         print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)), end="")
         if i_episode % 100 == 0:
             print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)))
-        if np.mean(scores_window)>=13.0:
+        if np.mean(scores_window)>=15.0:
             print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode-100, np.mean(scores_window)))
-            torch.save(ai_agent.qnetwork_local.state_dict(), 'checkpointai13.pth')
+            torch.save(ai_agent.qnetwork_local.state_dict(), 'checkpointai15.pth')
             break
         
     return scores      
        
+
+
+# In[45]:
+
+
+#v9.3 -Highy score so repeat once  to get threshold 15
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=500
+max_t=1000
+eps_start=0.976 
+eps_end=0.0005 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[46]:
+
+
+# plot the scores
+fig = plt.figure()
+ax = fig.add_subplot(111)
+plt.plot(np.arange(len(scores)), scores)
+plt.ylabel('Score')
+plt.xlabel('Episode #')
+plt.show()
+
+
+# In[47]:
+
+
+#Watch the train Agent perfromance
+# load the weights from file
+firstAI_trained = AiAgent(state_size=37,action_size=4,seed=24)
+firstAI_trained.qnetwork_local.load_state_dict(torch.load('checkpointai15.pth'))
+          
+
+
+# In[48]:
+
+
+# Test Run score
+score = test_run_single_episode(env, brain_name, firstAI_trained)
+
+print(f'Score: {score}')
+
+
+# In[49]:
+
+
+env.close()
+
+
+# #History - Parameter tuning 
+
+# In[42]:
+
+
+#v9 -Highy score so repeat once  to get threshold 17
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=1000
+max_t=1000
+eps_start=0.976 
+eps_end=0.0005 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
 
 
 # In[33]:
@@ -410,7 +477,10 @@ firstAI_trained.qnetwork_local.load_state_dict(torch.load('checkpointai13.pth'))
 
 
 def test_run_single_episode (env: UnityEnvironment,brain_name, ai_agent:AiAgent=None,max_t=1000,epsl=0.,train_mode=False):
-    """Input e """
+    """Input env|agent|number of steps|test mode
+       Output Agent score
+    
+    """
     env_info = env.reset(train_mode=train_mode)[brain_name]
     action_size = env.brains[brain_name].vector_action_space_size
     state = env_info.vector_observations[0]
@@ -448,13 +518,16 @@ def test_run_single_episode (env: UnityEnvironment,brain_name, ai_agent:AiAgent=
 # Test Run score
 score = test_run_single_episode(env, brain_name, firstAI_trained)
 
+print(f'Score: {score}')  
+
+
+# In[40]:
+
+
+# Test Run score
+score = test_run_single_episode(env, brain_name, firstAI_trained)
+
 print(f'Score: {score}')
-
-
-# In[ ]:
-
-
-
 
 
 # When finished, you can close the environment.
