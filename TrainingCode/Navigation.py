@@ -70,7 +70,7 @@ print('States have length:', state_size)
 # 
 # Note that **in this coding environment, you will not be able to watch the agent while it is training**, and you should set `train_mode=True` to restart the environment.
 
-# In[6]:
+# In[5]:
 
 
 env_info = env.reset(train_mode=True)[brain_name] # reset the environment
@@ -91,7 +91,7 @@ while True:
 print("Score: {}".format(score))
 
 
-# In[7]:
+# In[6]:
 
 
 #DeepQLearning 
@@ -99,7 +99,11 @@ from nn_model import QDeepNetwork
 from agent import AiAgent
 
 
-# In[17]:
+
+
+
+
+# In[7]:
 
 
 #Reference Libraries
@@ -112,19 +116,19 @@ import random
 import torch
 
 
-# In[9]:
+# In[8]:
 
 
 #Test to create the instance of AiAgent
 firstAI = AiAgent(state_size=37,action_size=4,seed=1)
 
 
-# In[18]:
+# In[15]:
 
 
 #Train the Agent
 #Function dqn helps to calculate Agent's score when it get interacted with the Environment
-def dqn(firstAI,num_episodes=3000, max_t=1000, eps_start=0.9999, eps_end=0.05, eps_decay=0.995):
+def dqn(ai_agent,num_episodes=500, max_t=1000, eps_start=0.9999, eps_end=0.05, eps_decay=0.995):
     """Deep Q-Learning.
     
     Params
@@ -135,10 +139,12 @@ def dqn(firstAI,num_episodes=3000, max_t=1000, eps_start=0.9999, eps_end=0.05, e
         eps_end (float): minimum value of epsilon
         eps_decay (float): multiplicative factor (per episode) for decreasing epsilon
     """
+    
+    
     scores = []                        # list containing scores from each episode
     scores_window = deque(maxlen=100)  # last 100 scores
     eps = eps_start                    # initialize epsilon
-
+    
 
     for i_episode in range(1,num_episodes+1):
         #reset the unity Env_info for each new episode
@@ -151,45 +157,35 @@ def dqn(firstAI,num_episodes=3000, max_t=1000, eps_start=0.9999, eps_end=0.05, e
         #Iterative run until all number of episodes done
     
         while True:
-            action = firstAI.act(state,eps)
+            action = ai_agent.act(state,eps)
         
-            env_info = env.step(action)[brain_name]
+            env_info = env.step(action)[brain_name]        #Take action based on Epsilion Greedy Policy
             next_state = env_info.vector_observations[0]   # get the next state
             reward = env_info.rewards[0]                   # get the reward
-            done = env_info.local_done[0]                  # see if episode has finished            
-            state = next_state                             # roll over the state to next time step
+            done = env_info.local_done[0]                  # see if episode has finished 
+            
+            ai_agent.step(state, action, reward, next_state, done)
+            
             score += reward                                # update the score
+            state = next_state                             # roll over the state to next time step            
             if done:                                       # exit loop if episode finished
                 break
-            scores_window.append(score)       # save most recent score
-            scores.append(score)              # save most recent score
-            eps = max(eps_end, eps_decay*eps) # decrease epsilon
-            print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)), end="")
-            if i_episode % 100 == 0:
-                print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)))
-            if np.mean(scores_window)>=200.0:
-                print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode-100, np.mean(scores_window)))
-            torch.save(firstAI.qnetwork_local.state_dict(), 'checkpointaiv3.pth')
+            
+        scores_window.append(score)       # save most recent score
+        scores.append(score)              # save most recent score
+        eps = max(eps_end, eps_decay*eps) # decrease epsilon
+        print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)), end="")
+        if i_episode % 100 == 0:
+            print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)))
+        if np.mean(scores_window)>=200.0:
+            print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode-100, np.mean(scores_window)))
             break
-    return scores
+        torch.save(ai_agent.qnetwork_local.state_dict(), 'checkpointaiv6.pth')
+    return scores      
        
-    
- 
-    
-    
 
 
-
-# In[19]:
-
-
-#v3  Updated Network model
-firstAIagent = AiAgent(state_size=37,action_size=4,seed=17)
-
-scores = dqn(firstAIagent)
-
-
-# In[ ]:
+# In[12]:
 
 
 #v2  Updated EveryTimeStep to 10 and 
@@ -198,23 +194,16 @@ firstAI1 = AiAgent(state_size=37,action_size=4,seed=17)
 scores = dqn(firstAI1)
 
 
-# In[ ]:
+# In[16]:
 
 
-#v1.1 Updated EveryTimeStep to 5 and 
-firstAI1 = AiAgent(state_size=37,action_size=4,seed=1)
+#v3  Updated EveryTimeStep to 4 and 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=17)
 
 scores = dqn(firstAI1)
 
 
-# In[ ]:
-
-
-#v1.0
-scores = dqn()
-
-
-# In[20]:
+# In[17]:
 
 
 # plot the scores
@@ -226,12 +215,12 @@ plt.xlabel('Episode #')
 plt.show()
 
 
-# In[21]:
+# In[18]:
 
 
 #Watch the train Agent perfromance
 # load the weights from file
-firstAI.qnetwork_local.load_state_dict(torch.load('checkpointaiv3.pth'))
+firstAI.qnetwork_local.load_state_dict(torch.load('checkpointaiv6.pth'))
 
 
             
@@ -239,7 +228,7 @@ firstAI.qnetwork_local.load_state_dict(torch.load('checkpointaiv3.pth'))
 
 # When finished, you can close the environment.
 
-# In[12]:
+# In[19]:
 
 
 env.close()
