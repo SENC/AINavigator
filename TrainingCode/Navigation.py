@@ -116,19 +116,19 @@ import random
 import torch
 
 
-# In[8]:
+# In[ ]:
 
 
 #Test to create the instance of AiAgent
-firstAI = AiAgent(state_size=37,action_size=4,seed=1)
+firstAI = AiAgent(state_size=37,action_size=4,seed=17)
 
 
-# In[15]:
+# In[32]:
 
 
 #Train the Agent
 #Function dqn helps to calculate Agent's score when it get interacted with the Environment
-def dqn(ai_agent,num_episodes=500, max_t=1000, eps_start=0.9999, eps_end=0.05, eps_decay=0.995):
+def dqn(ai_agent,num_episodes=1000, max_t=1000, eps_start=0.78, eps_end=0.0025, eps_decay=0.995):
     """Deep Q-Learning.
     
     Params
@@ -177,24 +177,205 @@ def dqn(ai_agent,num_episodes=500, max_t=1000, eps_start=0.9999, eps_end=0.05, e
         print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)), end="")
         if i_episode % 100 == 0:
             print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)))
-        if np.mean(scores_window)>=200.0:
+        if np.mean(scores_window)>=13.0:
             print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode-100, np.mean(scores_window)))
+            torch.save(ai_agent.qnetwork_local.state_dict(), 'checkpointai13.pth')
             break
-        torch.save(ai_agent.qnetwork_local.state_dict(), 'checkpointaiv6.pth')
+        
     return scores      
        
+
+
+# In[33]:
+
+
+#v9 -Highy score so repeat once  
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=1000
+max_t=1000
+eps_start=0.976 
+eps_end=0.0005 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[31]:
+
+
+#v11  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=1000
+max_t=500
+eps_start=0.786 
+eps_end=0.0005 
+eps_decay=0.9979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[30]:
+
+
+#v10  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=1000
+max_t=1000
+eps_start=0.976 
+eps_end=0.0005 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[28]:
+
+
+#v9  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=500
+max_t=1000
+eps_start=0.976 
+eps_end=0.0005 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[26]:
+
+
+#v7  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=500
+max_t=1000
+eps_start=0.917 
+eps_end=0.0007 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[25]:
+
+
+#v7  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=300
+max_t=1000
+eps_start=0.8217 
+eps_end=0.0027 
+eps_decay=0.979
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[23]:
+
+
+#v6  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=1000
+max_t=1000
+eps_start=0.7817 
+eps_end=0.0017 
+eps_decay=0.919
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[18]:
+
+
+#v6  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+num_episodes=1000
+max_t=1000
+eps_start=0.7817 
+eps_end=0.0025 
+eps_decay=0.919
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[17]:
+
+
+#v6  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=1)
+
+num_episodes=300
+max_t=1000
+eps_start=0.6917 
+eps_end=0.0015 
+eps_decay=0.999
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[14]:
+
+
+#v5  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=1)
+
+num_episodes=300
+max_t=1000
+eps_start=0.24 
+eps_end=0.0025 
+eps_decay=0.895
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
 
 
 # In[12]:
 
 
-#v2  Updated EveryTimeStep to 10 and 
+#v4  Updated EveryTimeStep to 4 
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=1)
+
+num_episodes=300
+max_t=1000
+eps_start=0.60 
+eps_end=0.0025 
+eps_decay=0.895
+scores = dqn(firstAI1,num_episodes,max_t,eps_start,eps_end,eps_decay)
+
+
+# In[11]:
+
+
+#v3  Updated EveryTimeStep to 4 and eps start .78 ep end 0.0025 seed 24
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+scores = dqn(firstAI1)
+
+
+# In[10]:
+
+
+#v2  Updated EveryTimeStep to 4 and eps start .78 ep end 0.0025 seed 24
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+scores = dqn(firstAI1)
+
+
+# In[ ]:
+
+
+#v2  Updated EveryTimeStep to 4 and eps start .79 seed 24
 firstAI1 = AiAgent(state_size=37,action_size=4,seed=17)
 
 scores = dqn(firstAI1)
 
 
-# In[16]:
+# In[12]:
+
+
+firstAI1 = AiAgent(state_size=37,action_size=4,seed=24)
+
+scores = dqn(firstAI1)
+
+
+# In[ ]:
 
 
 #v3  Updated EveryTimeStep to 4 and 
@@ -203,7 +384,7 @@ firstAI1 = AiAgent(state_size=37,action_size=4,seed=17)
 scores = dqn(firstAI1)
 
 
-# In[17]:
+# In[34]:
 
 
 # plot the scores
@@ -215,20 +396,70 @@ plt.xlabel('Episode #')
 plt.show()
 
 
-# In[18]:
+# In[35]:
 
 
 #Watch the train Agent perfromance
 # load the weights from file
-firstAI.qnetwork_local.load_state_dict(torch.load('checkpointaiv6.pth'))
+firstAI_trained = AiAgent(state_size=37,action_size=4,seed=24)
+firstAI_trained.qnetwork_local.load_state_dict(torch.load('checkpointai13.pth'))
+          
 
 
+# In[36]:
+
+
+def test_run_single_episode (env: UnityEnvironment,brain_name, ai_agent:AiAgent=None,max_t=1000,epsl=0.,train_mode=False):
+    """Input e """
+    env_info = env.reset(train_mode=train_mode)[brain_name]
+    action_size = env.brains[brain_name].vector_action_space_size
+    state = env_info.vector_observations[0]
+    
+    #initial the score 
+    score =0
+    
+    #Run each step in the episode
+    for _ in range (max_t):
+        action = ai_agent.act(state,epsl) if ai_agent else np.random.randint(action_size)
+        
+        #lets make the agent take the action 
+        env_info = env.step(action)[brain_name]
+        
+        #get the next state 'St+1'
+        next_state = env_info.vector_observations[0]
+        reward = env_info.rewards[0]
+        done = env_info.local_done[0]
+        
+        if ai_agent and train_mode: #Train mode is True then make the agent learn
+            ai_agent.step(state, action, reward, next_state, done)
+        
+        state = next_state
+        score += reward
+        if done:
+            break
+    return score
+        
             
+
+
+# In[38]:
+
+
+# Test Run score
+score = test_run_single_episode(env, brain_name, firstAI_trained)
+
+print(f'Score: {score}')
+
+
+# In[ ]:
+
+
+
 
 
 # When finished, you can close the environment.
 
-# In[19]:
+# In[ ]:
 
 
 env.close()
