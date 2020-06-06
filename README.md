@@ -25,8 +25,10 @@ Project Goal to make the Agent collect 13+ Rewards as an average score in 100 co
 # What you can learn:
 Deep Reinforcement Learning ,In simple , a mathematical way to clone the experiences start with trial and error approach to form a #digitalmemory (DeepQ) and take the best action based on current situation to get a better state to maximize the reward like how a kid learn to play a video games motivated by 'high scorer' achievement.
 
-This project simply help you to get the core of how AI works and detail implementation of Deep Q algorithm 
+This project simply help you to get the core of how AI works and detail implementation of Deep Q algorithm .
+5 Winning Rules for AI too !
 
+<img src=Reference/DeepLearning_RL.png width="684">
 
 # Tools -Source Code & Report :
 
