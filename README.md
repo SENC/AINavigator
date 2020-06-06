@@ -15,4 +15,13 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 2 - turn left.
 3 - turn right.
 
-The task is episodic, and in order to solve the environment, the  agent must get an average score of +13 over 100 consecutive episodes.
+The task is episodic, and in order to solve the environment, the trained agent must get an average score of +13 over 100 consecutive episodes.
+
+Source Code & Report 
+
+1. The Navigation.ipynb
+    file with fully functional code displaying output to give you an overall program flow start with Unity Environment till Trained agent average score plot
+2. Report.pdf :  
+    project report in details covering DeepQ and Agent and Model details
+3. NetworkWeight.pt 
+    A file with the saved model weights of the successful agent, can be named something like model.pt.
