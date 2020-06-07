@@ -11,22 +11,22 @@ A reward of +1 is provided for collecting a yellow banana, and a reward of -1 is
 
 The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around the agent's forward direction. Given this information, the agent has to learn how to best select actions. Four discrete actions are available, corresponding to:
 
-0 - move forward.
-1 - move backward.
-2 - turn left.
-3 - turn right.
+'0' - _move forward_.
+'1' - _move backward_.
+'2' - _turn left_.
+'3' - _turn right-.
 
 The task is episodic, and in order to solve the environment, the trained agent must get an average score of +13 over 100 consecutive episodes.
 
 
 # Problem statement:
-Project Goal to make the Agent collect 13+ Rewards as an average score in 100 consecqutive episodes.
+Project Goal to make the Agent collect 13+ Rewards as an average score over 100 consecqutive episodes.
 
 # What you can learn:
 Deep Reinforcement Learning ,In simple , a mathematical way to clone the experiences start with trial and error approach to form a #digitalmemory (DeepQ) and take the best action based on current situation to get a better state to maximize the reward like how a kid learn to play a video games motivated by 'high scorer' achievement.
 
 This project simply help you to get the core of how AI works and detail implementation of Deep Q algorithm .
-5 Winning Rules for AI too !
+**5 Winning Rules for AI too !**
 
 <img src=Reference/DeepLearning_RL.png width="684">
 
